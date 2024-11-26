@@ -192,7 +192,7 @@ describe('InMemoryRepository unit tests', () => {
   })
 
   describe('search', () => {
-    it('should paginate items', async () => {
+    it('should search for items', async () => {
       const items = Array(16).fill(model)
 
       sut.items = items
@@ -205,6 +205,93 @@ describe('InMemoryRepository unit tests', () => {
         sort: null,
         sort_dir: null,
         filter: null
+      })
+    })
+
+    it('should apply paginate and filter', async () => {
+      const items = [
+        { id: randomUUID(), name: 'testado', price: 10, created_at, updated_at },
+        { id: randomUUID(), name: 'a', price: 20, created_at, updated_at },
+        { id: randomUUID(), name: 'c', price: 30, created_at, updated_at },
+        { id: randomUUID(), name: 'test', price: 20, created_at, updated_at },
+        { id: randomUUID(), name: 'd', price: 30, created_at, updated_at },
+      ]
+
+      sut.items = items 
+
+      const result = await sut.search({
+        page: 1,
+        per_page: 2,
+        filter: 'test',
+      })
+
+      expect(result).toStrictEqual({
+        items: [items[0], items[3]],
+        total: 2, 
+        current_page: 1,
+        per_page: 2,
+        sort: null,
+        sort_dir: null,
+        filter: 'test'
+      })
+    })
+
+    it('should apply paginate and sort', async () => {
+      const items = [
+        { id: randomUUID(), name: 'b', price: 10, created_at, updated_at },
+        { id: randomUUID(), name: 'a', price: 20, created_at, updated_at },
+        { id: randomUUID(), name: 'c', price: 30, created_at, updated_at },
+        { id: randomUUID(), name: 'e', price: 20, created_at, updated_at },
+        { id: randomUUID(), name: 'd', price: 30, created_at, updated_at },
+      ]
+
+      sut.items = items 
+
+      const result = await sut.search({
+        page: 2,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'asc',
+      })
+
+      expect(result).toStrictEqual({
+        items: [items[2], items[4]],
+        total: 5, 
+        current_page: 2,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'asc',
+        filter: null
+      })
+    })
+
+    it('should apply paginate and sort AND filter', async () => {
+      const items = [
+        { id: randomUUID(), name: 'b', price: 10, created_at, updated_at },
+        { id: randomUUID(), name: 'dCARO', price: 20, created_at, updated_at },
+        { id: randomUUID(), name: 'c', price: 30, created_at, updated_at },
+        { id: randomUUID(), name: 'e', price: 20, created_at, updated_at },
+        { id: randomUUID(), name: 'acaro', price: 30, created_at, updated_at },
+      ]
+
+      sut.items = items 
+
+      const result = await sut.search({
+        page: 1,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'asc',
+        filter: 'caro'
+      })
+
+      expect(result).toStrictEqual({
+        items: [items[4], items[1]],
+        total: 2, 
+        current_page: 1,
+        per_page: 2,
+        sort: 'name',
+        sort_dir: 'asc',
+        filter: 'caro'
       })
     })
   })
