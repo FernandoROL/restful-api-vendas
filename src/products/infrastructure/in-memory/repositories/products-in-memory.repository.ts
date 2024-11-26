@@ -9,8 +9,7 @@ import {
 
 export class ProductsInMemoryRepository
   extends InMemoryRepository<ProductModel>
-  implements ProductsRepository
-{
+  implements ProductsRepository {
   sortableFields: string[] = ['name', 'created_at']
 
   async findByName(name: string): Promise<ProductModel> {

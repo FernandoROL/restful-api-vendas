@@ -56,9 +56,9 @@ describe('ProductsInMemoryRepository unit tests', () => {
 
     it('should filter data using a filter parameter', async () => {
       const item = [
-        ProductsDataBuilder({name: 'Test'}),
-        ProductsDataBuilder({name: 'TEST'}),
-        ProductsDataBuilder({name: 'Faker'})
+        ProductsDataBuilder({ name: 'Test' }),
+        ProductsDataBuilder({ name: 'TEST' }),
+        ProductsDataBuilder({ name: 'Faker' })
       ]
 
       sut.items.push(...item)
@@ -83,10 +83,10 @@ describe('ProductsInMemoryRepository unit tests', () => {
       const created_at = new Date()
 
       const items = [
-        ProductsDataBuilder({name: 'Daniel', created_at: created_at}),
-        ProductsDataBuilder({name: 'Alan', created_at: new Date(created_at.getTime() + 100)}),
-        ProductsDataBuilder({name: 'Bernardo', created_at: new Date(created_at.getTime() + 300)}),
-        ProductsDataBuilder({name: 'Carlos', created_at: new Date(created_at.getTime() + 600)})
+        ProductsDataBuilder({ name: 'Daniel', created_at: created_at }),
+        ProductsDataBuilder({ name: 'Alan', created_at: new Date(created_at.getTime() + 100) }),
+        ProductsDataBuilder({ name: 'Bernardo', created_at: new Date(created_at.getTime() + 300) }),
+        ProductsDataBuilder({ name: 'Carlos', created_at: new Date(created_at.getTime() + 600) })
       ]
 
       let result = await sut['applySort'](items, null, null)
@@ -95,9 +95,9 @@ describe('ProductsInMemoryRepository unit tests', () => {
 
     it('should sort items by name field', async () => {
       const items = [
-        ProductsDataBuilder({name: 'Bernardo'}),
-        ProductsDataBuilder({name: 'Alan'}),
-        ProductsDataBuilder({name: 'Carlos'})
+        ProductsDataBuilder({ name: 'Bernardo' }),
+        ProductsDataBuilder({ name: 'Alan' }),
+        ProductsDataBuilder({ name: 'Carlos' })
       ]
       sut.items.push(...items)
 
