@@ -4,7 +4,7 @@ import { env } from "../env";
 export const dataSource = new DataSource({
   type: env.DB_TYPE,
   host: env.DB_HOST,
-  port: env.BD_PORT,
+  port: env.DB_PORT,
   schema: env.DB_SCHEMA,
   database: env.DB_NAME,
   username: env.DB_USER,
