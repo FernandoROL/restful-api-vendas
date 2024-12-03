@@ -1,9 +1,9 @@
 import { AppError } from "@/common/domain/error/app-error";
 import { Request, Response } from "express";
 import { z } from "zod";
-import { ProductsTypeormRepository } from "../typeorm/repositories/products-typeorm.repository";
+import { ProductsTypeormRepository } from "../../typeorm/repositories/products-typeorm.repository";
 import { dataSource } from "@/common/infrastructure/typeorm";
-import { Product } from "../typeorm/entities/products.entity";
+import { Product } from "../../typeorm/entities/products.entity";
 import { CreateProductUseCase } from "@/products/application/usecases/create-product.usecase";
 
 export async function createProductController(request: Request, response: Response) {
@@ -23,7 +23,7 @@ export async function createProductController(request: Request, response: Respon
     )
   }
 
-  const {name,price,quantity} = validateData.data
+  const { name, price, quantity } = validateData.data
 
   const repository = new ProductsTypeormRepository
   repository.productsRepository = dataSource.getRepository(Product)

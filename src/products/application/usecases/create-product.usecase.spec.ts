@@ -17,11 +17,11 @@ describe('CreateProductUseCase Unit Test', () => {
     const spyInsert = jest.spyOn(repository, 'insert')
     const props = {
       name: 'Product 1',
-      price: 10, 
+      price: 10,
       quantity: 6
     }
 
-    const result  = await sut.execute(props)
+    const result = await sut.execute(props)
     expect(result.id).toBeDefined()
     expect(result.created_at).toBeDefined()
     expect(spyInsert).toHaveBeenCalledTimes(1)
@@ -30,7 +30,7 @@ describe('CreateProductUseCase Unit Test', () => {
   it('should not be possible to register a product with the name of another product', async () => {
     const props = {
       name: 'Product 1',
-      price:  20,
+      price: 20,
       quantity: 5
     }
 
@@ -41,7 +41,7 @@ describe('CreateProductUseCase Unit Test', () => {
   it('should throw error when name not provided', async () => {
     const props = {
       name: null,
-      price:  20,
+      price: 20,
       quantity: 5
     }
 
@@ -51,7 +51,7 @@ describe('CreateProductUseCase Unit Test', () => {
   it('should throw error when price not provided', async () => {
     const props = {
       name: "Product 1",
-      price:  null,
+      price: null,
       quantity: 5
     }
 
@@ -61,7 +61,7 @@ describe('CreateProductUseCase Unit Test', () => {
   it('should throw error when quantity not provided', async () => {
     const props = {
       name: 'Product 1',
-      price:  20,
+      price: 20,
       quantity: null
     }
 
