@@ -33,34 +33,3 @@ describe('GetProductUseCase Unit Test', () => {
     await expect(sut.execute({ id: "fake-id" })).rejects.toBeInstanceOf(NotFoundError)
   })
 })
-
-//   it('should throw error when name not provided', async () => {
-//     const props = {
-//       name: null,
-//       price: 20,
-//       quantity: 5
-//     }
-
-//     await expect(sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)
-//   })
-
-//   it('should throw error when price not provided', async () => {
-//     const props = {
-//       name: "Product 1",
-//       price: null,
-//       quantity: 5
-//     }
-
-//     await expect(sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)
-//   })
-
-//   it('should throw error when quantity not provided', async () => {
-//     const props = {
-//       name: 'Product 1',
-//       price: 20,
-//       quantity: null
-//     }
-
-//     await expect(sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)
-//   })
-// })

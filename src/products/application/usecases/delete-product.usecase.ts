@@ -1,3 +1,4 @@
+import { BadRequestError } from "@/common/domain/error/bad-request-error"
 import { ProductsRepository } from "@/products/domain/repositories/products.repository"
 import { inject, injectable } from "tsyringe"
 import { ProductOutput } from "../dto/product-output.dto"
