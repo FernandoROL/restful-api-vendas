@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createProductController } from "../controllers/create-product.controller";
+import { getProductController } from "../controllers/get-product.controller copy";
 
 const productsRouter = Router()
 
@@ -74,5 +75,30 @@ const productsRouter = Router()
  *         description: Name already used on another product
  */
 productsRouter.post('/', createProductController)
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   get:
+ *     summary: Get a product by ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The product ID
+ *     responses:
+ *       200:
+ *         description: The product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: The product was not found
+ */
+productsRouter.get('/:id', getProductController)
 
 export { productsRouter }
