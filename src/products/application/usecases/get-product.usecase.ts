@@ -3,15 +3,12 @@ import { ProductsRepository } from "@/products/domain/repositories/products.repo
 import { inject, injectable } from "tsyringe"
 import { ProductOutput } from "../dto/product-output.dto"
 
-export namespace CreateProductUseCase {
+export namespace GetProductUseCase {
   export type Input = {
-    name: string
-    price: number
-    quantity: number
+    id: string
   }
 
   export type Output = ProductOutput
-
   @injectable()
   export class UseCase {
     constructor(
@@ -20,12 +17,7 @@ export namespace CreateProductUseCase {
     ) { }
 
     async execute(input: Input): Promise<Output> {
-      if (!input.name || input.price <= 0 || input.quantity <= 0) {
-        throw new BadRequestError('Input data not provided or invalid')
-      }
-      await this.productsRepository.conflictingName(input.name)
-      const product = this.productsRepository.create(input)
-      await this.productsRepository.insert(product)
+      const product = await this.productsRepository.findById(input.id)
       return {
         id: product.id,
         name: product.name,
