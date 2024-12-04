@@ -2,7 +2,6 @@ import { testDataSource } from "@/common/infrastructure/typeorm/testing/data-sou
 import { ProductsTypeormRepository } from "./products-typeorm.repository"
 import { Product } from "../entities/products.entity"
 import { NotFoundError } from "@/common/domain/error/bot-found-error"
-import { env } from "process"
 import { randomUUID } from "crypto"
 import { ProductsDataBuilder } from "../../testing/helpers/products-data-builder"
 import { ConflictError } from "@/common/domain/error/conflict-error"
@@ -10,9 +9,11 @@ import { ProductModel } from "@/products/domain/models/products.models"
 
 describe('ProductsTypeormRepository integration tests', () => {
   let ormRepository: ProductsTypeormRepository
+  let typeormEntityManager: any
 
   beforeAll(async () => {
     await testDataSource.initialize()
+    typeormEntityManager = testDataSource.createEntityManager()
   })
 
   afterAll(async () => {
@@ -21,8 +22,9 @@ describe('ProductsTypeormRepository integration tests', () => {
 
   beforeEach(async () => {
     await testDataSource.manager.query("DELETE FROM products")
-    ormRepository = new ProductsTypeormRepository()
-    ormRepository.productsRepository = testDataSource.getRepository(Product)
+    ormRepository = new ProductsTypeormRepository(
+      typeormEntityManager.getRepository(Product),
+    )
   })
 
   describe('findById', () => {

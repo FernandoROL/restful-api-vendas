@@ -5,6 +5,7 @@ import { ProductsTypeormRepository } from "../../typeorm/repositories/products-t
 import { dataSource } from "@/common/infrastructure/typeorm";
 import { Product } from "../../typeorm/entities/products.entity";
 import { CreateProductUseCase } from "@/products/application/usecases/create-product.usecase";
+import { container } from "tsyringe";
 
 export async function createProductController(request: Request, response: Response) {
   const createProductBodySchema = z.object({
@@ -25,9 +26,7 @@ export async function createProductController(request: Request, response: Respon
 
   const { name, price, quantity } = validateData.data
 
-  const repository = new ProductsTypeormRepository
-  repository.productsRepository = dataSource.getRepository(Product)
-  const createProductUseCase = new CreateProductUseCase.UseCase(repository)
+  const createProductUseCase: CreateProductUseCase.UseCase = container.resolve('CreateProductUseCase')
 
   const product = await createProductUseCase.execute({
     name,

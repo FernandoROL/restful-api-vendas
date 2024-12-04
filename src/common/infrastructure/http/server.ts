@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { dataSource } from "../typeorm";
 import { app } from "./app";
 import { env } from "process";
+import '@/common/infrastructure/container'
 
 dataSource.initialize()
   .then(() => {
