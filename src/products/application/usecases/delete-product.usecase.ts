@@ -1,14 +1,13 @@
-import { BadRequestError } from "@/common/domain/error/bad-request-error"
 import { ProductsRepository } from "@/products/domain/repositories/products.repository"
 import { inject, injectable } from "tsyringe"
 import { ProductOutput } from "../dto/product-output.dto"
 
-export namespace GetProductUseCase {
+export namespace DeleteProductUseCase {
   export type Input = {
     id: string
   }
 
-  export type Output = ProductOutput
+  export type Output = void
   @injectable()
   export class UseCase {
     constructor(
@@ -17,8 +16,7 @@ export namespace GetProductUseCase {
     ) { }
 
     async execute(input: Input): Promise<Output> {
-      const product: ProductOutput = await this.productsRepository.findById(input.id)
-      return product
+      await this.productsRepository.delete(input.id)
     }
   }
 }
