@@ -3,6 +3,7 @@ import { createProductController } from "../controllers/create-product.controlle
 import { getProductController } from "../controllers/get-product.controller";
 import { updateProductController } from "../controllers/update-product.controller";
 import { deleteProductController } from "../controllers/delete-product.controller";
+import { allProductController } from "../controllers/all-product.controller";
 
 const productsRouter = Router()
 
@@ -77,6 +78,8 @@ const productsRouter = Router()
  *         description: Name already used on another product
  */
 productsRouter.post('/', createProductController)
+
+productsRouter.get('/', allProductController)
 
 /**
  * @swagger

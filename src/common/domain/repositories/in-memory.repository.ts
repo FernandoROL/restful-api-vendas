@@ -89,6 +89,10 @@ export abstract class InMemoryRepository<Model extends ModelProps> implements Re
     })
   }
 
+  async findAll(): Promise<Model[]> {
+    return [...this.items]; // Return a shallow copy of the items array
+  }
+
   protected async applyPaginate(items: Model[], page: number, per_page: number): Promise<Model[]> {
     const start = (page - 1) * per_page
     const limit = start + per_page
