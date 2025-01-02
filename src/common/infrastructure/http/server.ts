@@ -1,7 +1,6 @@
-import { randomUUID } from "crypto";
 import { dataSource } from "../typeorm";
 import { app } from "./app";
-import { env } from "process";
+import { env } from "../env";
 import '@/common/infrastructure/container'
 
 dataSource.initialize()

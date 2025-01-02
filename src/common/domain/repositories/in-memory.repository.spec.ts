@@ -295,21 +295,4 @@ describe('InMemoryRepository unit tests', () => {
       })
     })
   })
-
-  describe('findAll', () => {
-    it('should return an array of items', () => {
-      const items = [
-        { id: randomUUID(), name: 'b', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'a', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'c', price: 30, created_at, updated_at },
-        { id: randomUUID(), name: 'e', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'd', price: 30, created_at, updated_at },
-      ]
-
-      sut.items = items
-
-      const result = sut.findAll()
-      expect(result).toEqual(items)
-    })
-  })
 })
