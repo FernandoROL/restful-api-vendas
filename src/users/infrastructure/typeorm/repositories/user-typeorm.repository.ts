@@ -5,7 +5,7 @@ import { User } from '../entities/users.entity'
 import {SearchInput, SearchOutput} from '@/common/domain/repositories/repository.interface'
 import { UserModel } from '@/users/domain/models/users.model'
 import { NotFoundError } from '@/common/domain/error/bot-found-error'
-import { CreateUserProps, UserRepository } from '@/users/domain/models/repositories/users.repository'
+import { CreateUserProps, UserRepository } from '@/users/domain/repositories/users.repository'
 import { ConflictError } from '@/common/domain/error/conflict-error'
 
 @injectable()

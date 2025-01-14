@@ -1,5 +1,5 @@
 import { RepositoryInterface } from "@/common/domain/repositories/repository.interface";
-import { UserModel } from "../users.model";
+import { UserModel } from "../models/users.model";
 
 export type CreateUserProps = {
   name: string

@@ -1,11 +1,11 @@
 import { randomUUID } from 'node:crypto'
 import { testDataSource } from '@/common/infrastructure/typeorm/testing/data-source'
-import { UsersTypeormRepository } from './users-typeorm.repository'
 import { User } from '../entities/users.entity'
-import { NotFoundError } from '@/common/domain/errors/not-found-error'
-import { UsersDataBuilder } from '../../testing/helpers/users-data-builder'
-import { ConflictError } from '@/common/domain/errors/conflict-error'
 import { UserModel } from '@/users/domain/models/users.model'
+import { UsersTypeormRepository } from './user-typeorm.repository'
+import { NotFoundError } from '@/common/domain/error/bot-found-error'
+import { UserDataBuilder } from '../../testing/helpers/user-data-builder'
+import { ConflictError } from '@/common/domain/error/conflict-error'
 
 describe('UsersTypeormRepository integration tests', () => {
   let ormRepository: UsersTypeormRepository
@@ -36,7 +36,7 @@ describe('UsersTypeormRepository integration tests', () => {
     })
 
     it('should finds a user by id', async () => {
-      const data = UsersDataBuilder({})
+      const data = UserDataBuilder({})
       const user = testDataSource.manager.create(User, data)
       await testDataSource.manager.save(user)
 
@@ -49,7 +49,7 @@ describe('UsersTypeormRepository integration tests', () => {
 
   describe('create', () => {
     it('should create a new user object', () => {
-      const data = UsersDataBuilder({})
+      const data = UserDataBuilder({})
       const result = ormRepository.create(data)
       expect(result.name).toEqual(data.name)
       expect(result.email).toEqual(data.email)
@@ -58,7 +58,7 @@ describe('UsersTypeormRepository integration tests', () => {
 
   describe('insert', () => {
     it('should insert a new user', async () => {
-      const data = UsersDataBuilder({})
+      const data = UserDataBuilder({})
       const result = await ormRepository.insert(data)
       expect(result.name).toEqual(data.name)
       expect(result.email).toEqual(data.email)
@@ -67,14 +67,14 @@ describe('UsersTypeormRepository integration tests', () => {
 
   describe('update', () => {
     it('should generate an error when the user is not found', async () => {
-      const data = UsersDataBuilder({})
+      const data = UserDataBuilder({})
       await expect(ormRepository.update(data)).rejects.toThrow(
         new NotFoundError(`User not found using ID ${data.id}`),
       )
     })
 
     it('should update a user', async () => {
-      const data = UsersDataBuilder({})
+      const data = UserDataBuilder({})
       const user = testDataSource.manager.create(User, data)
       await testDataSource.manager.save(user)
       user.name = 'John Doe'
@@ -93,7 +93,7 @@ describe('UsersTypeormRepository integration tests', () => {
     })
 
     it('should delete a user', async () => {
-      const data = UsersDataBuilder({})
+      const data = UserDataBuilder({})
       const user = testDataSource.manager.create(User, data)
       await testDataSource.manager.save(user)
 
@@ -115,7 +115,7 @@ describe('UsersTypeormRepository integration tests', () => {
     })
 
     it('should finds a user by name', async () => {
-      const data = UsersDataBuilder({ name: 'John Doe' })
+      const data = UserDataBuilder({ name: 'John Doe' })
       const user = testDataSource.manager.create(User, data)
       await testDataSource.manager.save(user)
 
@@ -133,7 +133,7 @@ describe('UsersTypeormRepository integration tests', () => {
     })
 
     it('should finds a user by email', async () => {
-      const data = UsersDataBuilder({ email: 'a@a.com' })
+      const data = UserDataBuilder({ email: 'a@a.com' })
       const user = testDataSource.manager.create(User, data)
       await testDataSource.manager.save(user)
 
@@ -144,7 +144,7 @@ describe('UsersTypeormRepository integration tests', () => {
 
   describe('conflictingEmail', () => {
     it('should generate an error when the user found', async () => {
-      const data = UsersDataBuilder({ email: 'a@a.com' })
+      const data = UserDataBuilder({ email: 'a@a.com' })
       const user = testDataSource.manager.create(User, data)
       await testDataSource.manager.save(user)
 
@@ -156,7 +156,7 @@ describe('UsersTypeormRepository integration tests', () => {
 
   describe('search', () => {
     it('should apply only pagination when the other params are null', async () => {
-      const arrange = Array(16).fill(UsersDataBuilder({}))
+      const arrange = Array(16).fill(UserDataBuilder({}))
       arrange.map(element => delete element.id)
       const data = testDataSource.manager.create(User, arrange)
       await testDataSource.manager.save(data)
@@ -176,7 +176,7 @@ describe('UsersTypeormRepository integration tests', () => {
     it('should order by created_at DESC when search params are null', async () => {
       const created_at = new Date()
       const models: UserModel[] = []
-      const arrange = Array(16).fill(UsersDataBuilder({}))
+      const arrange = Array(16).fill(UserDataBuilder({}))
       arrange.forEach((element, index) => {
         delete element.id
         models.push({
@@ -205,7 +205,7 @@ describe('UsersTypeormRepository integration tests', () => {
       const models: UserModel[] = []
       'badec'.split('').forEach((element, index) => {
         models.push({
-          ...UsersDataBuilder({}),
+          ...UserDataBuilder({}),
           name: element,
           created_at: new Date(created_at.getTime() + index),
         })
@@ -244,7 +244,7 @@ describe('UsersTypeormRepository integration tests', () => {
       const values = ['test', 'a', 'TEST', 'b', 'TeSt']
       values.forEach((element, index) => {
         models.push({
-          ...UsersDataBuilder({}),
+          ...UserDataBuilder({}),
           name: element,
           created_at: new Date(created_at.getTime() + index),
         })
