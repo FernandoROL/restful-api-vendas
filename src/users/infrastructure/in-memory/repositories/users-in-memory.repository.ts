@@ -1,7 +1,7 @@
 import { NotFoundError } from "@/common/domain/error/bot-found-error";
 import { ConflictError } from "@/common/domain/error/conflict-error";
 import { InMemoryRepository } from "@/common/domain/repositories/in-memory.repository";
-import { UserRepository } from "@/users/domain/models/repositories/users.repository";
+import { UserRepository } from "@/users/domain/repositories/users.repository";
 import { UserModel } from "@/users/domain/models/users.model";
 
 export class UsersInMemoryRepository 
