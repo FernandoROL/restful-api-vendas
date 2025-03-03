@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createUserController } from "../controllers/create-user.controller";
+import { searchUserController } from "../controllers/search-user.controller";
 
 const userRoute = Router()
 
@@ -111,5 +112,52 @@ const userRoute = Router()
  *         description: Email already used on another user
  */
 userRoute.post('/', createUserController)
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Returns a paginated list of users
+ *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: The page number to retrieve
+ *       - in: query
+ *         name: per_page
+ *         schema:
+ *           type: integer
+ *           default: 15
+ *         description: Number of items per page
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           default: null
+ *         description: Field to sort by
+ *       - in: query
+ *         name: sort_dir
+ *         schema:
+ *           type: string
+ *           default: null
+ *         description: Sort direction (asc or desc)
+ *       - in: query
+ *         name: filter
+ *         schema:
+ *           type: string
+ *           default: null
+ *         description: Filter string to search for specific users
+ *     responses:
+ *       200:
+ *         description: A paginated list of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserListResponse'
+ */
+userRoute.get('/', searchUserController)
 
 export { userRoute }

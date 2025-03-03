@@ -1,8 +1,8 @@
-import { inject, injectable } from "tsyringe"
-import { UserOutput } from "../dtos/user-output.dto"
-import { UserRepository } from "@/users/domain/repositories/users.repository"
-import { BadRequestError } from "@/common/domain/error/bad-request-error"
-import { HashProvider } from "@/common/domain/providers/hash-provider"
+import { inject, injectable } from 'tsyringe'
+import { UserOutput } from '../dtos/user-output.dto'
+import { UserRepository } from '@/users/domain/repositories/users.repository'
+import { BadRequestError } from '@/common/domain/error/bad-request-error'
+import { HashProvider } from '@/common/domain/providers/hash-provider'
 
 export namespace CreateUserUseCase {
   export type Input = {
@@ -19,21 +19,22 @@ export namespace CreateUserUseCase {
       @inject('UsersRepository')
       private usersRepository: UserRepository,
       @inject('HashProvider')
-      private hashProvider: HashProvider
-    ) { }
+      private hashProvider: HashProvider,
+    ) {}
     async execute(input: Input): Promise<Output> {
       if (!input.name || !input.email || !input.password) {
-        throw new BadRequestError("Input data not provided or invalid")
+        throw new BadRequestError('Input data not provided or invalid')
       }
 
       await this.usersRepository.conflictingEmail(input.email)
 
-      const hashedPassword = await this.hashProvider.generateHash(input.password)
+      const hashedPassword = await this.hashProvider.generateHash(
+        input.password,
+      )
 
       const user = this.usersRepository.create(input)
       user.password = hashedPassword
       return this.usersRepository.insert(user)
-
     }
   }
 }
