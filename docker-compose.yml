@@ -2,20 +2,20 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
     ports:
-      - "80"
       - "5432:5432"
     networks:
       - api-vendas-2024
     volumes:
-      - postgres_data:/postgresql
+      - postgres_data:/var/lib/postgresql/data
 
   api-rest:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
-    ports: 
+    ports:
       - "3333:3333"
     networks:
       - api-vendas-2024
@@ -31,4 +31,3 @@ volumes:
 
 networks:
   api-vendas-2024:
-
