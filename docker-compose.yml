@@ -21,6 +21,9 @@ services:
       - api-vendas-2024
     depends_on:
       - postgres
+    volumes:
+      - ./:/var/www
+    command: 'sh -c ./start.sh'
 
 volumes:
   postgres_data:

@@ -38,7 +38,7 @@ cp .env.example .env
 3. #### Run the docker containers for the application 
 
 ```bash
-docker compose up -d
+docker compose up
 ```
 
 ## Running the app
