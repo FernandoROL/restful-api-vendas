@@ -16,7 +16,12 @@ const envSchema = z.object({
   DB_USER: z.string().default('postgres'),
   DB_PASS: z.string().default('postgres'),
   JWT_SECRET: z.string(),
-  JTW_EXPIRES_IN: z.coerce.number().default(86400)
+  JTW_EXPIRES_IN: z.coerce.number().default(86400),
+  CLOUDFLARE_ACCOUNT_ID: z.string(),
+  CLOUDFLARE_R2_URL: z.string(),
+  CLOUDFLARE_R2_BUCKET_NAME: z.string(),
+  AWS_ACCESS_KEY_ID: z.string(),
+  AWS_SECRET_ACCESS_KEY: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)

@@ -2,6 +2,8 @@ import { Router } from "express";
 import { createUserController } from "../controllers/create-user.controller";
 import { searchUserController } from "../controllers/search-user.controller";
 import { isAuthenticated } from "@/common/infrastructure/http/middleware/isAuthenticated";
+import { updateAvatarController } from "../controllers/update-avatar.controller";
+import { uploadAvatar } from "../middlewares/upload-avatar";
 
 const userRoute = Router()
 
@@ -114,8 +116,6 @@ const userRoute = Router()
  */
 userRoute.post('/', createUserController)
 
-userRoute.use(isAuthenticated)
-
 /**
  * @swagger
  * /users:
@@ -161,6 +161,39 @@ userRoute.use(isAuthenticated)
  *             schema:
  *               $ref: '#/components/schemas/UserListResponse'
  */
-userRoute.get('/', searchUserController)
+userRoute.get('/', isAuthenticated, searchUserController)
+
+/**
+ * @swagger
+ * /users/avatar:
+ *   patch:
+ *     summary: Upload an image for a user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: string
+ *                 format: uuid
+ *                 description: The user id
+ *               file:
+ *                 type: file
+ *                 format: binary
+ *                 description: The image file to upload
+ *     responses:
+ *       200:
+ *         description: The image was successfully uploaded
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: The user was not found
+ *       500:
+ *         description: Some server error
+ */
+userRoute.patch('/avatar', isAuthenticated, uploadAvatar.single('file'), updateAvatarController)
 
 export { userRoute }
