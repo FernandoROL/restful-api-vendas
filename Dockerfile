@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE 3333
 
-CMD ["sh", "-c", "./start.sh"]
+CMD ["sh", "-c", "./docker/start.sh"]

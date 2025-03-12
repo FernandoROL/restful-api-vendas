@@ -5,7 +5,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS}
       POSTGRES_USER: ${DB_USER}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:${DB_PORT}"
     networks:
       - api-vendas-2024
     volumes:
@@ -16,18 +16,34 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3333:3333"
+      - "${PORT}:${PORT}"
     networks:
       - api-vendas-2024
     depends_on:
       - postgres
     volumes:
       - ./:/var/www
-    command: 'sh -c ./start.sh'
+    command: 'sh -c ./docker/start.sh'
+
+  api-vendas-phpmyadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "8090:80"
+    networks:
+      - api-vendas-2024
+    depends_on:
+      - postgres
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+    volumes:
+      - ./docker/pgAdmin/servers.json:/pgadmin4/servers.json
+      
 
 volumes:
   postgres_data:
-    driver: local
 
 networks:
   api-vendas-2024:

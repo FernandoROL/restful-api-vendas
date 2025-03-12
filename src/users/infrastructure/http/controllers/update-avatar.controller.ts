@@ -3,6 +3,7 @@ import { container } from 'tsyringe'
 import { z } from 'zod'
 import { dataValidation } from '@/common/infrastructure/validation/zod'
 import { UpdateAvatarUseCase } from '@/users/application/usecases/update-avatar.usecase'
+import { instanceToInstance } from 'class-transformer'
 
 export async function updateAvatarController(
   request: Request,
@@ -35,5 +36,5 @@ export async function updateAvatarController(
     body: buffer
   })
 
-  return response.status(200).json(user_avatar)
+  return response.status(200).json(instanceToInstance(user_avatar))
 }

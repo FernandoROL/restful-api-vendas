@@ -19,6 +19,7 @@ export class User implements UserModel {
   password: string
 
   @Column()
+  @Exclude()
   avatar?: string
 
   @CreateDateColumn()
@@ -29,7 +30,7 @@ export class User implements UserModel {
 
   @Expose({name: 'avatar_url'})
   getAvatarUrl() {
-    if (!this.avatar) return null
+    if(!this.avatar) return "No avatar image set"
 
     return `${env.CLOUDFLARE_R2_URL}/${this.avatar}`
   }

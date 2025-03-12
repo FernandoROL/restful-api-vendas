@@ -1,0 +1,15 @@
+{
+  "Servers": {
+      "1": {
+          "Group": "Servers",
+          "Name": "Docker",
+          "Host": "postgres",
+          "Port": 5432,
+          "MaintenanceDB": "api-vendas-2024-postgres-1",
+          "Username": "postgres",
+          "Password": "postgres!",
+          "SSLMode": "prefer",
+          "Favorite": true
+      }
+  }
+}
