@@ -1,5 +1,3 @@
-import { string } from "zod";
-
 export interface UserModel {
   id: string
   name: string
