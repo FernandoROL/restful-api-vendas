@@ -49,4 +49,5 @@ docker compose up
 http://localhost:3333/
 ```
 > NOTE: The API swagger documentation can be accessed in: http://localhost:3333/docs
+
 > NOTE: The PSAdmin can be accessed at http://localhost:8090 - postgres database manager
