@@ -6,13 +6,31 @@ import { CreateUserUseCase } from '@/users/application/usecases/create-user.usec
 import { SearchUserUseCase } from '@/users/application/usecases/search-user.usecase'
 import { AuthenticateUserUseCase } from '@/users/application/usecases/authenticate-user.usecase'
 import { UpdateAvatarUseCase } from '@/users/application/usecases/update-avatar.usecase'
+import { UserTokensTypeormRepository } from '../typeorm/repositories/user-tokens-typeorm.repository'
+import { UserToken } from '../typeorm/entities/user-tokens.entity'
+import { SendResetPasswordEmailUsecase } from '@/users/application/usecases/send-reset-password-email.usecase'
+import { ResetPasswordUseCase } from '@/users/application/usecases/resetPassword.usecase'
 
 container.registerSingleton('UsersRepository', UsersTypeormRepository)
 container.registerInstance(
   'UsersDefaultRepositoryTypeorm',
   dataSource.getRepository(User),
 )
+container.registerSingleton(
+  'UserTokensTypeormRepository',
+  UserTokensTypeormRepository,
+)
+container.registerInstance(
+  'UserTokensDefaultTypeormRepository',
+  dataSource.getRepository(UserToken),
+)
+
 container.registerSingleton('CreateUserUseCase', CreateUserUseCase.UseCase)
 container.registerSingleton('SearchUserUseCase', SearchUserUseCase.UseCase)
-container.registerSingleton('AuthenticateUserUseCase', AuthenticateUserUseCase.UseCase)
+container.registerSingleton(
+  'AuthenticateUserUseCase',
+  AuthenticateUserUseCase.UseCase,
+)
 container.registerSingleton('UpdateAvatarUseCase', UpdateAvatarUseCase.UseCase)
+container.registerSingleton('SendResetPasswordEmailUsecase', SendResetPasswordEmailUsecase.UseCase)
+container.registerSingleton('ResetPasswordUseCase', ResetPasswordUseCase.UseCase)
