@@ -8,15 +8,15 @@ export async function resetPasswordController(
   request: Request,
   response: Response,
 ): Promise<Response> {
-  const paramsSchema = z.object({
+  const bodySchema = z.object({
     token: z.string().uuid(),
     password: z.string()
   })
 
-  const { token, password } = dataValidation(paramsSchema, request.body)
+  const { token, password } = dataValidation(bodySchema, request.body)
 
   const resetPasswordUseCase: ResetPasswordUseCase.UseCase = container.resolve(
-    'SendResetPasswordEmailUsecase',
+    'ResetPasswordUseCase',
   )
 
   await resetPasswordUseCase.execute({ token, password })

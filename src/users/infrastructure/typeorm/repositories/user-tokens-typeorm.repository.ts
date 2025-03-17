@@ -18,7 +18,7 @@ export class UserTokensTypeormRepository implements UserTokensRepository {
   sortableFields: string[] = ['created_at']
 
   constructor(
-    @inject('UserTokensDefaultRepositoryTypeorm')
+    @inject('UserTokensDefaultTypeormRepository')
     private userTokensRepository: Repository<UserTokensModel>,
     @inject('UsersRepository')
     private usersRepository: UserRepository,

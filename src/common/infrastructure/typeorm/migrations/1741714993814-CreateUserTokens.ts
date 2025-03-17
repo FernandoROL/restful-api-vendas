@@ -5,7 +5,7 @@ export class CreateUserTokens1741714993814 implements MigrationInterface {
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
     await queryRunner.createTable(
       new Table({
-        name: 'user_tokens',
+        name: 'user-tokens',
         columns: [
           {
             name: 'id',
@@ -47,6 +47,6 @@ export class CreateUserTokens1741714993814 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_tokens')
+    await queryRunner.dropTable('user-tokens')
   }
 }

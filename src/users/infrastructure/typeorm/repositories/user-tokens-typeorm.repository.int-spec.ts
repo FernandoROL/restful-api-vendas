@@ -24,7 +24,7 @@ describe('UserTokensTypeormRepository Integration Tests', () => {
   })
 
   beforeEach(async () => {
-    await testDataSource.manager.query('DELETE FROM user_tokens')
+    await testDataSource.manager.query('DELETE FROM user-tokens')
     usersRepository = new UsersTypeormRepository(
       typeormEntityManager.getRepository(User),
     )
