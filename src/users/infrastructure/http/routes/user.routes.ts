@@ -4,6 +4,7 @@ import { searchUserController } from "../controllers/search-user.controller";
 import { isAuthenticated } from "@/common/infrastructure/http/middleware/isAuthenticated";
 import { updateAvatarController } from "../controllers/update-avatar.controller";
 import { uploadAvatar } from "../middlewares/upload-avatar";
+import { getUserController } from "../controllers/get-user.controller";
 
 const userRoute = Router()
 
@@ -195,5 +196,23 @@ userRoute.get('/', isAuthenticated, searchUserController)
  *         description: Some server error
  */
 userRoute.patch('/avatar', isAuthenticated, uploadAvatar.single('file'), updateAvatarController)
+
+/**
+ * @swagger
+ * /users/profile:
+ *   get:
+ *     summary: Returns the user profile
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: The user profile
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized
+ */
+userRoute.get('/profile', isAuthenticated, getUserController)
 
 export { userRoute }
